@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SMIL2GIF: SMIL2GIF Converter</title>
+    <meta charset="UTF-8">
+    <meta http-quiv="X-UA-Compatible" content="IE=9" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Easily convert your SVG SMIL animations into GIF animations!">
+    <meta name="author" content="Michael Schwartz">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="favicon-512x512.png">
+    <link rel="stylesheet" href="libraries/animateCSS/animate.css">
+    <link rel="stylesheet" href="libraries/polyui/polyui.css">
+    <link rel="stylesheet" href="libraries/font-awesome/font-awesome.css">
+    <link rel="stylesheet" href="css/polyrise.css">
+    <link rel="stylesheet" href="libraries/alertifyjs/css/alertify.min.css">
+    <link rel="stylesheet" href="libraries/alertifyjs/css/themes/default.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <meta property="og:url"         content="https://michaelsboost.com/SMIL2GIF" />
+    <meta property="og:type"        content="website" />
+    <meta property="og:title"       content="SMIL2GIF: SMIL2GIF Converter" />
+    <meta property="og:description" content="Easily convert your SVG SMIL animations into GIF animations!" />
+    <meta property="og:image"       content="https://raw.githubusercontent.com/michaelsboost/SMIL2GIF/gh-pages/header.png" />
+  </head>
+  <body>
+    <div class="header polyriseblock notgrid w100p h100p" style="display: inline-table; padding: 1em;">
+      <div class="grid h100p">
+        <div class="grid__col--12 nomar h100p">
+          <div class="table">
+            <div class="cell">
+              <div class="panel--centered centered grid__col--12 tc">
+               <div id="grabit">
+                 <div id="animate"></div>
+               </div>
+               <div id="showit" class="hide">
+                 <img id="result">
+               </div>
+               <div id="creatingsequence" class="hide">
+                 <h1>Frames remaining</h1>
+                </div>
+               <div id="showprocess" class="hide">
+                 <svg viewBox="0 0 600 150">
+                   <text y="93.75" x="75" style="line-height:125%;" font-weight="400" font-size="80" font-family="Lato" letter-spacing="0" word-spacing="0" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <tspan>Creating GIF</tspan>
+                    </text>
+                  </svg>
+                </div>
+                <label for="openfile">
+                  <h1 id="read" class="bounceInUp bounceInUp1s blacktxt pointer">
+                    <i class="fa fa-upload"></i>
+                  </h1>
+                </label>
+                <h2 id="animDimensions" class="bounceInUp bounceInUp1s blacktxt hide" style="font-size: 32px;">
+                  Width: <input id="animWidth" type="number" step="1" min="50" value="800" style="background: none; width: 150px; display: inline; padding: 0 0 0 15px; text-align: center;"><br>
+                  Height: <input id="animHeight" type="number" step="1" min="50" value="600" style="background: none; width: 150px; display: inline; padding: 0 0 0 15px; text-align: center;">
+                </h2>
+                <h2 id="scripttxt" class="bounceInUp bounceInUp1s blacktxt hide" style="font-size: 32px;">
+                  Frames per second: <input id="animRate" type="number" step="0.1" min="0.01" value="0.04" style="background: none; width: 150px; display: inline; padding: 0 0 0 15px; text-align: center;"><br>
+                  How long is your animation?: <input id="animLength" type="number" step="1" min="1" value="2" style="background: none; width: 150px; display: inline; padding: 0 0 0 15px; text-align: center;"> (seconds)
+                </h2>
+                <p id="btns" class="hide" style="margin-bottom: 4em; text-align: center;">
+                  <a id="grabframes" class="btn--blue bounceInUp bounceInUp1s pointer w100p">
+                    Grab Frames
+                  </a>
+                  <a id="creategif" class="hide btn--blue bounceInUp bounceInUp1s pointer w100p">
+                    Create Gif
+                  </a>
+                  <a id="exportgif" class="hide btn--blue bounceInUp bounceInUp1s pointer w100p" download="download">
+                    Export Gif
+                  </a>
+                  <a id="exportsequence" class="hide btn--success bounceInUp bounceInUp1s pointer w100p">
+                    Export Image Sequence
+                  </a>
+                </p>
+                
+                <div id="imgframes"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="dropflash" class="hide"></div>
+    
+    <!-- preview -->
+    <div class="hide">
+      <img id="preview">
+    </div>
+
+    <!-- canvas -->
+    <div class="hide">
+      <canvas id="canvas"></canvas>
+    </div>
+    
+    <!-- readsvg -->
+    <div class="hide">
+      <input type="file" accept="image/svg+xml" id="openfile">
+    </div>
+    <div class="hide">
+      <textarea id="readsvg" placeholder="SVG code goes here..." style="height:200px; resize: vertical;"></textarea>
+    </div>
+    
+    <script src="libraries/alertifyjs/alertify.min.js"></script>
+    <script src="libraries/jszip/Blob.js"></script>
+    <script src="libraries/jszip/FileSaver.js"></script>
+    <script src="libraries/jszip/jszip.min.js"></script>
+    <script src="libraries/jszip/jszip-utils.js"></script>
+    <script src="libraries/jquery/jquery.js"></script>
+    <script src="libraries/gifshot/gifshot.min.js"></script>
+    <script src="js/smil2gif.js"></script>
+  </body>
+</html>
