@@ -5,6 +5,10 @@ Easily convert your SVG SMIL animations into GIF animations!
 
 **NOTE**: If the final render wasn't accurate you can use [Pics2Gif](http://michaelsboost.com/Pics2Gif/) to convert your image sequence into a gif animation. With [Pics2Gif](http://michaelsboost.com/Pics2Gif/) you can click and remove an image from the animation that SMIL2GIF may have added when not necessary due to high CPU performance on your computer during the getFrame() process.
 
+### Did you know?
+
+SMIL2GIF was the first application released on the web that's specifically designed to convert SVG SMIL Animations into a GIF animation!
+
 License
 -------------
 
