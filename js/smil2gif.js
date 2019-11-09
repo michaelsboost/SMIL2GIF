@@ -113,6 +113,14 @@ function getFrame() {
   }
   grabFrameImg();
 }
+grabframe.onclick = function() {
+  getFrame();
+  
+  if ($("#imgframes img").length >= 2) {
+    creategif.classList.remove("hide");
+    return false;
+  }
+};
 grabframes.onclick = function() {
   creatingsequence.classList.remove("hide");
 
@@ -150,11 +158,13 @@ grabframes.onclick = function() {
     }
   }, animRate.value);
 
+  grabframe.classList.add("hide");
   grabframes.classList.add("hide");
 };
 
 // create gif animation
 creategif.onclick = function() {
+  grabframe.classList.add("hide");
   creategif.classList.add("hide");
   grabit.classList.add("hide");
   animDimensions.classList.add("hide");
