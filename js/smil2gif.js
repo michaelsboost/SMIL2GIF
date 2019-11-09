@@ -117,12 +117,17 @@ grabframe.onclick = function() {
   getFrame();
   
   if ($("#imgframes img").length >= 2) {
+    animWidth.value  = canvas.width;
+    animHeight.value = canvas.height;
+    animDimensions.classList.remove("hide");
     creategif.classList.remove("hide");
     return false;
   }
 };
 grabframes.onclick = function() {
   creatingsequence.classList.remove("hide");
+  animDimensions.classList.add("hide");
+  creategif.classList.add("hide");
 
   var frames = animLength.value / animRate.value;
   if (frames.toString().indexOf(".") >= 0) {
@@ -131,6 +136,7 @@ grabframes.onclick = function() {
   }
   
   reloadSVG();
+  imgframes.innerHTML = "";
   window.intervalID = setInterval(function() {
     console.log("Grabbing Frame " + counter++);
     var remainingFrames = parseInt(frames - parseInt(counter)) + " Frames remaining";
